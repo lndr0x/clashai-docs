@@ -1,0 +1,96 @@
+---
+title: 'Quickstart'
+description: "This guide will help you make your first API request in minutes. Experienced developers can jump directly to the [API reference](/api-reference) for advanced features."
+---
+
+## Ready, Set, Code: Your Journey Begins!
+
+To kick off this exciting journey, let's outline the essentials you’ll need to get underway:
+
+1. **Join Our Discord Server**: Hop onto our Discord server, where a vibrant community awaits, ready to share insights and provide support.
+2. **Secure Your API Key**: Obtain your API key; it’s your golden ticket for unlocking all that our system has to offer.
+3. **Choose Your Programming Language**: While you can use any standard programming language of your choice, we’ve chosen Python for this section due to its user-friendly nature and rich ecosystem.
+
+With these steps in hand, you're well-prepared to explore the possibilities that await!
+
+<Steps>
+  <Step title="Obtain Your API Key: The Gateway to Innovation">
+  To embark on your journey with ClashAI, the first crucial step is to acquire your API key. This golden key serves as your gateway to the world of limitless possibilities and functionalities.
+
+  For this, you need to join the [Discord server](https://discord.gg/yyfGnyKj9j) and go to the [Dashboard channel](https://discord.com/channels/1231339329435996280/1302343342746505347).
+
+  On the left sidebar, find the section labeled **"Manage API Key".** Here, you’ll click on **"Generate"** where your unique API key awaits—ready to unlock your explorations.
+
+  <Warning>Never expose your API key in client-side code. Store it securely: in a .env file, for example.</Warning>
+  <Tabs>
+    <Tab title="Linux/macOS">
+      ```bash
+      export CLASHAI_API_KEY="your_key_here"
+      ```
+    </Tab>
+    <Tab title="Windows">
+      ```bash
+      setx CLASHAI_API_KEY "your_key_here"
+      ```
+    </Tab>
+  </Tabs>
+
+  </Step>
+  <Step title="Install the Required Library: Getting Started with Python">
+  With your key ready, it's time to set the stage for action. Our API can be used either through our library or via OpenAI. If you choose OpenAI, you will need to set the base URL.
+
+  Our REST API can easily accommodate any programming language. However, for this exercise, we'll use Python, known for its accessibility and extensive libraries. In your terminal, execute the following command to install the necessary library:
+
+  <Tabs>
+    <Tab title="OpenAI Library">
+      ```bash
+      pip install openai
+      ```
+    </Tab>
+    <Tab title="ClashAI Library">
+      ```bash
+      pip install clashaipy
+      ```
+    </Tab>
+  </Tabs>
+  </Step>
+  <Step title="Crafting Your First API Request: Hello, ClashAI!">
+    Now comes the exhilarating moment of making your very first API request. In Python, you’ll import the essential libraries and set up your environment as follows:
+
+    <Tabs>
+      <Tab title="Using OpenAI Library">
+      ```python
+import os
+from openai import OpenAI
+
+api_key = os.getenv("CLASHAI_API_KEY")
+client = OpenAI(base_url='https://api.clashai.eu/v1', api_key=api_key)
+
+response = client.chat.completions.create(
+    model='gpt-4o-mini',
+    messages=[{'role': 'user', 'content': "If cats had their own civilization, what would it look like?"}]
+)
+print(response)
+      ```
+      </Tab>
+      <Tab title="Using ClashAI Library">
+      ```python
+import clashaipy
+api_key = os.getenv("CLASHAI_API_KEY")
+client = clashaipy.Client(api_key=api_key)
+completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "user",
+            "content": "If cats had their own civilization, what would it look like?",
+        }
+    ]
+)
+
+print(completion)
+      ```
+      </Tab>
+    </Tabs>
+  </Step>
+</Steps>

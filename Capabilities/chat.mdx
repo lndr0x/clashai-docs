@@ -1,0 +1,178 @@
+---
+title: 'Text Generatation'
+description: '
+Learn how to generate text from a prompt.'
+---
+
+## Quickstart
+To generate text from a prompt, you can use the `v1/chat/completions` endpoint. Here's how you can make a request to generate text:
+
+<Tabs>
+  <Tab title="cURL">
+  ```bash
+curl https://api.clashai.eu/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CLASHAI_API_KEY" \
+  -d '{
+     "model": "gpt-4o",
+     "messages": [{"role": "user", "content": "Say this is a test!"}]
+   }'
+  ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+import clashaipy
+
+api_key = os.getenv("CLASHAI_API_KEY")
+client = clashaipy.Client(api_key=api_key)
+
+completion = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {
+            "role": "user",
+            "content": "Say this is a test!",
+        }
+    ]
+)
+
+print(completion)
+	```
+  </Tab>
+  <Tab title="JavaScript">
+```javascript
+const axios = require('axios');
+
+const apiKey = 'YOUR_CLASHAI_API_KEY';
+const url = 'https://api.clashai.eu/v1/chat/completions';
+
+const data = {
+  model: 'gpt-4o',
+  messages: [
+    {
+      role: 'user',
+      content: 'Say this is a test!'
+    }
+  ]
+};
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${apiKey}`
+};
+
+axios.post(url, data, { headers })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+```
+  </Tab>
+</Tabs>
+
+## Messages
+
+Messages are an array of objects that contain the role and content of the message. The role can be either `user` or `assistant`. Each message can have a different role, which influences how the model might interpret the input.
+
+| Role     | Description                                                |
+| -------- | ---------------------------------------------------------- |
+| user     | The user who initiates the conversation or provides input |
+| assistant| The model's response or generated text                     |
+| system   | Special instructions or system-level messages (optional)  |
+
+## Message history
+
+The message history is an array of messages that the model has seen so far. This can be used to provide context to the model when generating text.
+
+<Tabs>
+  <Tab title="cURL">
+  ```bash
+  curl https://api.clashai.eu/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $CLASHAI_API_KEY" \
+    -d '{
+       "model": "gpt-4o",
+       "messages": [
+        {"role": "assistant", "content": "Hey! How was your day?"}, 
+		{"role": "user", "content": "Hey! It was... interesting."}, 
+		{"role": "assistant", "content": "Interesting? That sounds mysterious. What happened?"}, 
+		{"role": "user", "content": "Well, I met an old friend I hadn’t seen in many years."}, 
+		{"role": "assistant", "content": "That's great! How did it go?"},
+		{"role": "user", "content": "Hard to say. On one hand, it was nice to reminisce about old times, but on the other..."}, 
+		{"role": "assistant", "content": "Something went wrong?"},
+		{"role": "user", "content": "Yeah, he reminded me of some things I’d rather forget. Now I’m not sure if I’m happy about the meeting or not."}
+       ]
+     }'
+  ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import clashaipy
+    import os
+
+    api_key = os.getenv("CLASHAI_API_KEY")
+    client = clashaipy.Client(api_key=api_key)
+
+    message_history = [
+		{"role": "assistant", "content": "Hey, how’s it going?"}, 
+		{"role": "user", "content": "Pretty good, just got back from a hike."},
+		{"role": "assistant", "content": "That sounds awesome! Where did you go?"}, 
+		{"role": "user", "content": "I went to a trail up in the mountains. The view was incredible."}, 
+		{"role": "assistant", "content": "Wow, I can imagine! Was it a tough hike?"}, 
+		{"role": "user", "content": "It was challenging, but worth it. My legs are sore, but the fresh air made it feel so much better."}, 
+		{"role": "assistant", "content": "I bet! You’ll be feeling it tomorrow, though."}, 
+		{"role": "user", "content": "Oh, for sure. But I’ll probably go again next weekend. It’s addictive!"}
+    ]
+
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=message_history
+    )
+
+    print(completion)
+    ```
+  </Tab>
+  <Tab title="JavaScript">
+```javascript
+const axios = require('axios');
+
+const apiKey = 'YOUR_CLASHAI_API_KEY';
+const url = 'https://api.clashai.eu/v1/chat/completions';
+
+const messageHistory = [
+  {"role": "assistant", "content": "Hey, what have you been up to lately?"},
+  {"role": "user", "content": "Not much, just been working and catching up on some TV shows."}, 
+  {"role": "assistant", "content": "Nice! Anything good?"}, 
+  {"role": "user", "content": "I started a new crime drama. It’s pretty intense, but I can’t stop watching."}, 
+  {"role": "assistant", "content": "Sounds like a good binge-watch! What’s it called?"}, 
+  {"role": "user", "content": "It’s called Shadows of the Past. The plot twists are insane."}, 
+  {"role": "assistant", "content": "I’ve heard of it! Is it really that gripping?"}, 
+  {"role": "user", "content": "Definitely! Each episode leaves you wanting more. I’m almost through the season already!"}
+];
+
+const data = {
+  model: 'gpt-4o',
+  messages: messageHistory
+};
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${apiKey}`
+};
+
+axios.post(url, data, { headers })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+```
+  </Tab>
+</Tabs>
+
+---
+*For a more comprehensive and in-depth understanding, please visit https:///*

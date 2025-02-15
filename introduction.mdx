@@ -1,0 +1,30 @@
+---
+title: Welcome to ClashAI
+description: "The ClashAI API is designed to give you easy access to some of the most advanced artificial intelligence models available, like GPT-4o and Claude. Whether you’re looking to enhance your application, automate repetitive tasks, or just play around with AI technology, our API makes it simple and intuitive."
+---
+
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.png"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.png"
+  alt="Hero Dark"
+/>
+
+<Card title="Maximal Quick Start" href="/content/components/card-group">
+Jump right in with the ClashAI API!
+     ```python
+    from openai import OpenAI
+
+    client = OpenAI(base_url='https://api.clashai.eu/v1', api_key='YOUR_API_KEY')
+
+    response = client.chat.completions.create(
+        model='gpt-4o-mini',
+        messages=[{'role': 'user', 'content': "What's 2+2?"}]
+    )
+    print(response.choices[0].message.content)
+    ```
+</Card>
