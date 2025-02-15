@@ -78,7 +78,7 @@ print(response)
 import clashaipy
 api_key = os.getenv("CLASHAI_API_KEY")
 client = clashaipy.Client(api_key=api_key)
-completion = client.chat.completions.create(
+completion = client.chat.completions(
     model="gpt-4o-mini",
     messages=[
         {

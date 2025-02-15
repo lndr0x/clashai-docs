@@ -127,7 +127,7 @@ The message history is an array of messages that the model has seen so far. This
 		{"role": "user", "content": "Oh, for sure. But I’ll probably go again next weekend. It’s addictive!"}
     ]
 
-    completion = client.chat.completions.create(
+    completion = client.chat.completions(
         model="gpt-4o",
         messages=message_history
     )
