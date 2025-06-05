@@ -1,30 +1,34 @@
 ---
-title: Welcome to ClashAI
-description: "The ClashAI API is designed to give you easy access to some of the most advanced artificial intelligence [models](https://api.clashai.eu/v1/models) available, like GPT-4o and Claude. Whether you’re looking to enhance your application, automate repetitive tasks, or just play around with AI technology, our API makes it simple and intuitive."
+title: Introduction
+description: 'ClashAI — unified API providing seamless access to top AI models at 40% lower cost than official providers.'
+icon: 'sparkles'
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/banner.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/banner.png"
-  alt="Hero Dark"
-/>
+<img height='2064' width='1104' noZoom src='images/banner.png' />
 
-<Card title="Maximal Quick Start" href="/content/components/card-group">
-Jump right in with the ClashAI API!
-     ```python
-    from openai import OpenAI
+Welcome to **ClashAI** — your all-in-one gateway to the most advanced AI models on the market. We simplify your workflow by providing a **single unified API** that connects you to multiple AI services, eliminating the need to manage different SDKs or endpoints.
 
-    client = OpenAI(base_url='https://api.clashai.eu/v1', api_key='YOUR_API_KEY')
+## Here's why developers choose ClashAI
 
-    response = client.chat.completions.create(
-        model='gpt-4o-mini',
-        messages=[{'role': 'user', 'content': "What's 2+2?"}]
-    )
-    print(response.choices[0].message.content)
-    ```
+<Card title='Unified Access' icon='layer-group'>
+	We offer a variety of AI models through a single API. This includes models
+	from OpenAI, Anthropic, and DeepSeek, covering language, vision, and more.
 </Card>
+
+<Card title='Cost Efficiency' icon='piggy-bank'>
+	You'll save about 40% compared to other providers. This helps cut your costs.
+</Card>
+
+<Card title='Developer Friendly' icon='Code'>
+	The documentation provides clear examples and instructions. It's easy to find
+	what you need and get it working.
+</Card>
+
+<Card title='Robust and Scalable' icon='Server'>
+	ClashAI is built to be reliable. It handles high volumes and has minimal
+	downtime.
+</Card>
+
+## Getting Started
+
+To start, sign up and get your API key. Check out the [Quickstart guide](/quickstart) to make your first request in minutes.

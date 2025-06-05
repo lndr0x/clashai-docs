@@ -1,0 +1,183 @@
+---
+title: 'Errors'
+description: 'Common error responses from the ClashAI API and how to fix them.'
+icon: 'bug'
+---
+
+When working with the ClashAI API, you’ll inevitably run into errors. Here’s a list of the most common ones, what they mean, and how to fix it.
+
+---
+
+## Common Error Responses
+
+<Tabs>
+
+<Tab title="401 - Unauthorized">
+
+```json
+{
+	"error": {
+		"message": "Invalid or missing API key",
+		"type": "error",
+		"tip": "Troubleshoot at: https://discord.gg/RjX2CpdPpd",
+		"code": 401
+	}
+}
+```
+
+**What it means:** Your API key is either missing, invalid, or expired.
+**How to fix:**
+
+- Double-check your environment variable `CLASHAI_API_KEY`.
+- Make sure it’s passed correctly in your code or request headers.
+- Generate a new key if needed.
+
+### Example Fixes
+
+<Tabs>
+
+<Tab title="Python">
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+  api_key=os.getenv("CLASHAI_API_KEY"),
+  base_url="https://api.clashai.eu/v1"
+)
+```
+
+</Tab>
+
+<Tab title="Node.js">
+
+```javascript
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+	apiKey: process.env.CLASHAI_API_KEY,
+	baseURL: 'https://api.clashai.eu/v1',
+})
+```
+
+</Tab>
+
+<Tab title="cURL">
+
+```bash
+curl https://api.clashai.eu/v1/chat/completions \
+  -H "Authorization: Bearer $CLASHAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'
+```
+
+</Tab>
+
+</Tabs>
+
+</Tab>
+
+<Tab title="403 - Forbidden">
+
+```html
+<html>
+	<head>
+		<title>403 Forbidden</title>
+	</head>
+	<body>
+		<h1>403 Forbidden</h1>
+		<p>Access denied</p>
+	</body>
+</html>
+```
+
+**What it means:** Cloudflare has blocked your request, usually because it detected suspicious or abusive behavior. This often happens if your IP or request pattern triggered a firewall or rate limit rule.
+
+**Typical scenario:** Cloudflare returns an HTML 403 page indicating your request was banned or blocked
+
+**How to fix:**
+
+- Make sure you are not sending too many requests too quickly.
+- If you believe this block is a mistake, please open a support ticket so we can investigate and resolve the issue together.
+
+</Tab>
+
+<Tab title="429 - Too Many Requests">
+
+```json
+{
+	"error": {
+		"message": "Rate limit exceeded",
+		"type": "rate_limit_error",
+		"code": "too_many_requests"
+	}
+}
+```
+
+**What it means:** You’ve hit the API rate limit.
+**How to fix:**
+
+- Slow down your requests.
+- Implement exponential backoff or retry logic.
+- Upgrade your plan if limits are too low.
+
+</Tab>
+
+<Tab title="500 - Internal Server Error">
+
+```json
+{
+	"error": {
+		"message": "Internal server error",
+		"type": "server_error",
+		"code": "internal_error"
+	}
+}
+```
+
+**What it means:** Something went wrong on the server side.
+**How to fix:**
+
+- Retry after a short delay.
+- If it persists, contact support with request details.
+
+</Tab>
+
+<Tab title="404 - Not Found">
+```json
+{
+    "error": {
+        "message": "Invalid URL (POST /v1/chat/)",
+        "code": 404
+    }
+}
+```
+
+**What it means:** The endpoint you are trying to access does not exist, or the resource you're requesting was deleted or never created.
+
+**How to fix:**
+
+- Double-check the URL and HTTP method you're using.
+- Make sure the resource (e.g. model, file, deployment) actually exists.
+- Refer to the API documentation to verify you're calling the correct endpoint.
+
+</Tab>
+
+</Tabs>
+
+---
+
+## General Tips
+
+- Always log error responses for debugging.
+- Use retries with backoff on 429 and 500 errors.
+- Never ignore errors — your app will break silently.
+- Keep your API key safe; unauthorized errors often stem from key issues.
+
+---
+
+If you’re still stuck, check the [FAQ](faq) or hit support with your full request and error details.

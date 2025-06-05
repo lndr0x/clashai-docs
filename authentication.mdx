@@ -1,0 +1,192 @@
+---
+title: 'Authentication'
+description: 'Learn how to authenticate with the ClashAI API using your API key.'
+icon: 'lock'
+---
+
+# Authentication
+
+All requests to the ClashAI API must be authenticated using an API key. This key acts as your unique identifier and provides access to your account's usage and billing.
+
+<Callout type='warning'>
+	Never expose your API key publicly. Anyone with access to your key can use
+	your quota, rack up charges, or leak sensitive data.
+</Callout>
+
+---
+
+## Get Your API Key
+
+<Steps>
+
+<Step title='Log In'>
+	Go to the [ClashAI dashboard](https://dash.clashai.eu) and sign in to your
+	account.
+</Step>
+
+<Step title='Navigate to API Keys'>
+	Once you're logged in, open the **API Keys** tab from the sidebar.
+</Step>
+
+<Step title='Create a New Key'>
+	Click **Create API Key**, give it a name (e.g. `local-dev`, `production`), and
+	click **Confirm**.
+</Step>
+
+<Step title='Copy and Store the Key'>
+	Copy your new API key and store it securely — preferably in a `.env` file or a
+	secret manager like AWS Secrets Manager or HashiCorp Vault.
+</Step>
+
+</Steps>
+
+---
+
+## Set Your API Key
+
+You must make your API key available to your application. We recommend using environment variables to avoid hardcoding the key into your source code.
+
+<Tabs>
+
+<Tab title="Linux / macOS">
+
+```bash
+export CLASHAI_API_KEY="your_key_here"
+```
+
+</Tab>
+
+<Tab title="Windows">
+
+```bash
+setx CLASHAI_API_KEY "your_key_here"
+```
+
+<Callout type='note'>
+	Use `set` instead of `setx` if you only want to set the key for the current
+	session:
+</Callout>
+
+```bash
+set CLASHAI_API_KEY=your_key_here
+```
+
+</Tab>
+
+</Tabs>
+
+---
+
+## Authenticate in Code
+
+<Tabs>
+
+<Tab title="Python">
+
+```python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+  api_key=os.getenv("CLASHAI_API_KEY"),
+  base_url="https://api.clashai.eu/v1"
+)
+```
+
+</Tab>
+
+<Tab title="Node.js">
+
+```javascript
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+	apiKey: process.env.CLASHAI_API_KEY,
+	baseURL: 'https://api.clashai.eu/v1',
+})
+```
+
+</Tab>
+
+<Tab title="cURL">
+
+```bash
+curl https://api.clashai.eu/v1/chat/completions \
+  -H "Authorization: Bearer $CLASHAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [{"role": "user", "content": "Hello, world!"}]
+  }'
+```
+
+</Tab>
+
+</Tabs>
+
+---
+
+## API Key Format & Security
+
+<Callout type='info'>
+	ClashAI API keys usually begin with `clsk-` and are 32+ characters long.
+</Callout>
+
+- Keep your keys secret.
+- Never push them to GitHub (add `.env` to your `.gitignore`).
+- Rotate keys regularly and revoke any you no longer use.
+
+---
+
+## Common Errors
+
+<Tabs>
+
+<Tab title="401 - Unauthorized">
+
+```json
+{
+	"error": {
+		"message": "Invalid or missing API key",
+		"type": "error",
+		"tip": "Troubleshoot at: https://discord.gg/RjX2CpdPpd",
+		"code": 401
+	}
+}
+```
+
+**Fix:** Make sure your `CLASHAI_API_KEY` is correctly set and passed to the client.
+
+</Tab>
+
+<Tab title="403 - Forbidden">
+
+```json
+{
+	"error": {
+		"message": "API key does not have access to this resource",
+		"type": "authorization_error",
+		"code": "forbidden"
+	}
+}
+```
+
+**Fix:** Check your key’s permissions in the dashboard. Some features may be restricted.
+
+</Tab>
+
+</Tabs>
+
+---
+
+## Best Practices
+
+- ✅ Use `.env` files and a secrets manager in production.
+- ✅ Limit scopes and rotate your API keys.
+- ✅ Monitor your usage in the dashboard.
+- ❌ Never expose your key in frontend code or public repos.
+- ❌ Don’t hardcode secrets in your source files.
+
+---
+
+Still having issues? Go scream into the void or check the [FAQ](faq) page — whichever feels more productive.

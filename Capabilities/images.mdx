@@ -1,59 +1,88 @@
 ---
-title: 'Images and Embeds'
-description: 'Add image, video, and other HTML elements'
+title: 'Image Generation'
+description: 'Learn how to generate images from a prompt.'
 icon: 'image'
 ---
 
-<img
-  style={{ borderRadius: '0.5rem' }}
-  src="https://mintlify-assets.b-cdn.net/bigbend.jpg"
-/>
+## Quickstart
 
-## Image
+To generate an image from a prompt, you can use the `v1/images/generations` endpoint. Here's how you can make a request to generate an image:
 
-### Using Markdown
+<Tabs>
+  <Tab title="cURL">
+  ```bash
+curl https://api.clashai.eu/v1/images/generations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $CLASHAI_API_KEY" \
+  -d '{
+        "model": "imagen-3.0-generate-001",
+        "prompt": "A cute baby sea otter",
+        "n": 2,
+        "size": "256x256"
+    }'
+  ```
+  </Tab>
+  <Tab title="Python">
+```python
+import clashaipy
+import os
 
-The [markdown syntax](https://www.markdownguide.org/basic-syntax/#images) lets you add images using the following code
+api_key = os.getenv("CLASHAI_API_KEY")
+client = clashaipy.Client(api_key=api_key)
 
-```md
-![title](/path/image.jpg)
+response = client.image.generate(
+    prompt="FLUX.1 [pro]",
+    n=2,
+    size="1024x1024",
+    model="FLUX.1 [pro]"
+)
+
+for i, image in enumerate(response.get("images", [])):
+    print(f"Image {i + 1}: {image}")
+```
+  </Tab>
+  <Tab title="JavaScript">
+```javascript
+const axios = require('axios');
+const apiKey = process.env.CLASHAI_API_KEY;
+const url = 'https://api.clashai.eu/v1/images/generations';
+
+const data = {
+  model: 'FLUX.1 [pro]',
+  prompt: 'A futuristic cityscape at sunset',
+  n: 2,
+  size: '512x512'
+};
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${apiKey}`
+};
+
+axios.post(url, data, { headers })
+  .then(response => {
+    response.data.images.forEach((image, index) => {
+      console.log(`Image ${index + 1}: ${image}`);
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+```
+  </Tab>
+</Tabs>
+
+The response will be a JSON object with the following structure:
+```json
+{
+	"created": 1740306117,
+	"data": [
+		{
+			"url": "http://cdn.clashai.eu/v1/images/72820237"
+		}
+	]
+}
 ```
 
-Note that the image file size must be less than 5MB. Otherwise, we recommend hosting on a service like [Cloudinary](https://cloudinary.com/) or [S3](https://aws.amazon.com/s3/). You can then use that URL and embed.
-
-### Using Embeds
-
-To get more customizability with images, you can also use [embeds](/writing-content/embed) to add images
-
-```html
-<img height="200" src="/path/image.jpg" />
-```
-
-## Embeds and HTML elements
-
-<iframe
-  width="560"
-  height="315"
-  src="https://www.youtube.com/embed/4KzFe50RQkQ"
-  title="YouTube video player"
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-  style={{ width: '100%', borderRadius: '0.5rem' }}
-></iframe>
-
-<br />
-
-<Tip>
-
-Mintlify supports [HTML tags in Markdown](https://www.markdownguide.org/basic-syntax/#html). This is helpful if you prefer HTML tags to Markdown syntax, and lets you create documentation with infinite flexibility.
-
-</Tip>
-
-### iFrames
-
-Loads another HTML page within the document. Most commonly used for embedding videos.
-
-```html
-<iframe src="https://www.youtube.com/embed/4KzFe50RQkQ"> </iframe>
-```
+<img src="/images/flux.png" />
