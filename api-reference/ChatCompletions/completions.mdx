@@ -1,0 +1,108 @@
+---
+title: 'Chat Completions'
+openapi: 'POST /chat/completions'
+---
+
+This API endpoint allows you to send text and images as inputs, and the model will generate the next message in the conversation.
+
+## Create Chat Completion
+
+To create a chat completion, use the following endpoint:
+
+`POST /chat/completions`
+
+### Request Body
+
+<ParamField body='model' type='string' required>
+	The model id to use for completion ("gpt-4o", "gpt-4o-mini", "deepseek-r",
+	[...](/models))
+</ParamField>
+<ParamField body='messages' type='array' required>
+	An array of message objects that form the conversation
+</ParamField>
+<ParamField body='max_tokens' type='integer'>
+	The maximum number of tokens to generate
+</ParamField>
+<ParamField body='temperature' type='string'>
+	Sampling temperature, a value between 0 and 2.
+</ParamField>
+<ParamField body='stream' type='boolean'>
+	Whether to enable streaming responses
+</ParamField>
+<ParamField body='frequency_penalty' type='integer'>
+	Tells the model not to repeat a word that has already been used multiple times
+	in the conversation.
+</ParamField>
+<ParamField body='presence_penalty' type='integer'>
+	Prevents the model from repeating a word, even if it's only been used once
+</ParamField>
+<ParamField body='stop' type='array'>
+	Up to 4 sequences where the API will stop generating further tokens. The
+	returned text will not contain the stop sequence.
+</ParamField>
+
+<RequestExample>
+
+
+```python Python
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.clashai.eu/v1",
+    api_key=os.getenv("CLASHAI_API_KEY")
+)
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "user", "content": "Write a short story about a robot and a cat."}
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+```javascript Node.js
+const axios = require('axios')
+
+const apiKey = 'YOUR_CLASHAI_API_KEY'
+const url = 'https://api.clashai.eu/v1/chat/completions'
+
+const data = {
+	model: 'gpt-4o',
+	messages: [
+		{
+			role: 'user',
+			content: 'Say this is a test!',
+		},
+	],
+}
+
+const headers = {
+	'Content-Type': 'application/json',
+	Authorization: `Bearer ${apiKey}`,
+}
+
+axios
+	.post(url, data, { headers })
+	.then(response => {
+		console.log(response.data)
+	})
+	.catch(error => {
+		console.error('Error:', error)
+	})
+```
+
+```bash cURL
+curl https://api.clashai.eu/v1/chat/completions \
+  -H "Authorization: Bearer $CLASHAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "messages": [
+      {"role": "user", "content": "Write a short story about a robot and a cat"}
+    ]
+  }'
+```
+</RequestExample>

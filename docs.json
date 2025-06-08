@@ -1,100 +1,66 @@
 {
-	"$schema": "https://mintlify.com/docs.json",
-	"theme": "mint",
-	"name": "ClashAI Docs",
-	"colors": {
-		"primary": "#FF5858",
-		"light": "#FF5858",
-		"dark": "#1C1B1F"
-	},
-	"favicon": "/logo/logo.png",
-	"navigation": {
-		"tabs": [
-			{
-				"tab": "Guides",
-				"groups": [
-					{
-						"group": "Get Started",
-						"icon": "play",
-						"pages": ["introduction", "quickstart", "authentication" , "errors"]
-					},
-					{
-						"group": "Capabilities",
-						"pages": ["Capabilities/chat", "Capabilities/images"]
-					},
-					{
-						"group": "Chat UI API Setup",
-						"pages": [
-							"chatui/introduction",
-							"chatui/liberchat",
-							"chatui/venusai",
-							"chatui/chatkit",
-							"chatui/msty"
-						]
-					}
-				],
-				"icon": "compass"
-			},
-			{
-				"tab": "API Reference",
-				"groups": [
-					{
-						"group": "API Documentation",
-						"pages": ["api-reference/introduction"]
-					},
-					{
-						"group": "Endpoint Examples",
-						"pages": [
-							"api-reference/endpoint/get",
-							"api-reference/endpoint/create",
-							"api-reference/endpoint/delete"
-						]
-					}
-				]
-			}
-		],
-		"global": {
-			"anchors": [
-				{
-					"anchor": "Documentation",
-					"href": "https://mintlify.com/docs",
-					"icon": "book-open-cover"
-				},
-				{
-					"anchor": "Community",
-					"href": "https://mintlify.com/community",
-					"icon": "slack"
-				},
-				{
-					"anchor": "Blog",
-					"href": "https://mintlify.com/blog",
-					"icon": "newspaper"
-				}
-			]
-		}
-	},
-	"logo": {
-		"light": "/logo/logo.png",
-		"dark": "/logo/logo.png"
-	},
-	"navbar": {
-		"links": [
-			{
-				"label": "Support",
-				"href": "mailto:hi@mintlify.com"
-			}
-		],
-		"primary": {
-			"type": "button",
-			"label": "Dashboard",
-			"href": "https://dashboard.mintlify.com"
-		}
-	},
-	"footer": {
-		"socials": {
-			"x": "https://x.com/mintlify",
-			"github": "https://github.com/mintlify",
-			"linkedin": "https://linkedin.com/company/mintlify"
-		}
-	}
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ClashAI Docs",
+  "openapi": "api-reference/openapi.json",
+  "colors": {
+    "primary": "#FF5858",
+    "light": "#FF5858",
+    "dark": "#1C1B1F"
+  },
+  "favicon": "/logo/logo.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "API Guide",
+        "groups": [
+          {
+            "group": "Get Started",
+            "icon": "play",
+            "pages": ["introduction", "quickstart", "authentication", "errors"]
+          },
+          {
+            "group": "API Reference",
+            "pages": ["api-reference/ChatCompletions/completions"]
+          }
+        ],
+        "icon": "compass"
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/logo.png",
+    "dark": "/logo/logo.png"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://discord.gg/RjX2CpdPpd"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dash.clashai.eu/"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  },
+  "api": {
+    "baseUrl": "https://api.clashai.eu/v1",
+    "auth": {
+      "method": "bearer",
+      "name": "Authorization",
+      "inputPrefix": "Bearer "
+    },
+    "playground": {
+      "mode": "show"
+    }
+  }
 }
