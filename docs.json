@@ -42,7 +42,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dash.clashai.eu/"
+      "href": "https://clashai.eu/dashboard"
     }
   },
   "footer": {
